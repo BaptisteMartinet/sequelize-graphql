@@ -5,6 +5,10 @@
   "main": "index.js",
   "repository": "git@github.com:BaptisteMartinet/sequelize-graphql.git",
   "author": "Baptiste Martinet <baptiste.martinet@epitech.eu>",
+  "keywords": [
+    "sequelize",
+    "graphql"
+  ],
   "license": "MIT",
   "private": false
 }
