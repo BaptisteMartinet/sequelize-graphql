@@ -1,0 +1,10 @@
+{
+  "name": "sequelize-graphql",
+  "version": "1.0.0",
+  "description": "Lightweight library to sync sequelize and graphql",
+  "main": "index.js",
+  "repository": "git@github.com:BaptisteMartinet/sequelize-graphql.git",
+  "author": "Baptiste Martinet <baptiste.martinet@epitech.eu>",
+  "license": "MIT",
+  "private": false
+}
