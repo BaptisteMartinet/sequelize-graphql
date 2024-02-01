@@ -1,5 +1,5 @@
 {
-  "name": "sequelize-graphql",
+  "name": "sequelize-gql",
   "version": "1.0.0",
   "description": "Lightweight library to sync sequelize and graphql",
   "main": "dist/index.js",
