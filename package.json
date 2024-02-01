@@ -2,7 +2,9 @@
   "name": "sequelize-graphql",
   "version": "1.0.0",
   "description": "Lightweight library to sync sequelize and graphql",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
   "repository": "git@github.com:BaptisteMartinet/sequelize-graphql.git",
   "author": "Baptiste Martinet <baptiste.martinet@epitech.eu>",
   "keywords": [
@@ -10,5 +12,11 @@
     "graphql"
   ],
   "license": "MIT",
-  "private": false
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts"
+  },
+  "devDependencies": {
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3"
+  }
 }
