@@ -5,7 +5,10 @@
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
-  "repository": "git@github.com:BaptisteMartinet/sequelize-graphql.git",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/BaptisteMartinet/sequelize-graphql.git"
+  },
   "author": "Baptiste Martinet <baptiste.martinet@epitech.eu>",
   "keywords": [
     "sequelize",
