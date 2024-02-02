@@ -1,9 +1,11 @@
-name: Publish Package to npmjs4
+name: Publish Package to npmjs
+
 on:
   release:
     types: [published]
+
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -11,8 +13,7 @@ jobs:
         with:
           node-version: 20
           registry-url: 'https://registry.npmjs.org'
-          # scope: '@sequelize-graphql'
-      - run: yarn
+      - run: npx ci
       - run: yarn publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
