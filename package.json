@@ -19,7 +19,10 @@
     "build": "tsup src/index.ts --format cjs,esm --dts"
   },
   "devDependencies": {
+    "dataloader": "^2.2.2",
+    "graphql": "^16.8.1",
     "prettier": "3.2.4",
+    "sequelize": "^6.36.0",
     "tsup": "^8.0.1",
     "typescript": "^5.3.3"
   },
