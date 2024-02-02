@@ -11,7 +11,14 @@
     "noEmit": true,
     "rootDir": "src",
     "outDir": "dist",
-    "baseUrl": "src"
+    "baseUrl": "src",
+    "paths": {
+      "@definitions/*": ["definitions/*"],
+      "@schema/*": ["schema/*"],
+      "@graphql-utils/*": ["graphql-utils/*"],
+      "@sequelize-utils/*": ["sequelize-utils/*"],
+      "@utils/*": ["utils/*"]
+    }
   },
   "include": ["src"],
   "exclude": ["node_modules"]
