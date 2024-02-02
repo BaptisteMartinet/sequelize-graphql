@@ -1,21 +1,18 @@
-name: Publish Package to npmjs2
+name: Publish Package to npmjs3
 on:
   release:
     types: [published]
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 20
           registry-url: 'https://registry.npmjs.org'
           scope: '@sequelize-graphql'
       - run: yarn
-      - run: yarn npm publish --access public
+      - run: yarn publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
