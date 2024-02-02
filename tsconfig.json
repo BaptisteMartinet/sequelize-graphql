@@ -9,9 +9,9 @@
     "noUncheckedIndexedAccess": true,                    /* Add 'undefined' to a type when accessed using an index. */
     "skipLibCheck": true,                                /* Skip type checking all .d.ts files. */
     "noEmit": true,
-    "baseUrl": "src",
     "rootDir": "src",
-    "outDir": "dist"
+    "outDir": "dist",
+    "baseUrl": "src"
   },
   "include": ["src"],
   "exclude": ["node_modules"]
