@@ -1,4 +1,4 @@
-name: Publish Package to npmjs
+name: Publish Package to npmjs2
 
 on:
   release:
@@ -14,6 +14,7 @@ jobs:
           node-version: 20
           registry-url: 'https://registry.npmjs.org'
       - run: npx ci
+      - run: yarn build
       - run: yarn publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
