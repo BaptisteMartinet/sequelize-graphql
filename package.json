@@ -19,6 +19,7 @@
     "build": "tsup src/index.ts --format cjs,esm --dts"
   },
   "devDependencies": {
+    "prettier": "3.2.4",
     "tsup": "^8.0.1",
     "typescript": "^5.3.3"
   }
