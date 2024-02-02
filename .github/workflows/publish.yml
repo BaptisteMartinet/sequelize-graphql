@@ -1,4 +1,4 @@
-name: Publish Package to npmjs3
+name: Publish Package to npmjs4
 on:
   release:
     types: [published]
@@ -7,11 +7,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
           registry-url: 'https://registry.npmjs.org'
-          scope: '@sequelize-graphql'
+          # scope: '@sequelize-graphql'
       - run: yarn
       - run: yarn publish --access public
         env:
