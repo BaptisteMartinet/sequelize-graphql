@@ -1,7 +1,6 @@
 # sequelize-graphql
 
 [![NPM Version](https://img.shields.io/npm/v/%40sequelize-graphql%2Fcore?logo=npm)](https://www.npmjs.com/package/@sequelize-graphql/core)
-![GitHub top language](https://img.shields.io/github/languages/top/BaptisteMartinet/sequelize-graphql)
 [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/BaptisteMartinet/sequelize-graphql/npm-publish.yml)](https://github.com/BaptisteMartinet/sequelize-graphql/actions)
 [![GitHub Release Date - Published_At](https://img.shields.io/github/release-date/BaptisteMartinet/sequelize-graphql)](https://github.com/BaptisteMartinet/sequelize-graphql/releases)
 
