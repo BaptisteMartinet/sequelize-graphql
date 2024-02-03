@@ -16,3 +16,5 @@ or using yarn:
 ```sh
 yarn add @sequelize-graphql/core sequelize graphql dataloader
 ```
+
+See [Peer dependencies breakdown](https://github.com/BaptisteMartinet/sequelize-graphql/wiki/Peer-dependencies-breakdown) for more information.
