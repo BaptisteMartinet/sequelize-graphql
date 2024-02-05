@@ -37,7 +37,7 @@ export interface AuthorModel extends InferSequelizeModel<AuthorModel> {
 const Author: Model<AuthorModel> = new Model({
   name: 'Author',
   columns: {
-    firstname: { type: STRING, allowNull: false, exposed: true, description: 'The author\'s firstname' },
+    firstname: { type: STRING, allowNull: false, exposed: true, description: '...' },
     lastname: { type: STRING, allowNull: false, exposed: true },
   },
   fields: {
