@@ -71,10 +71,9 @@ export const BOOLEAN = {
  * console.log(RoleEnum.gqlType, RoleEnum.sequelizeType);
  *
  * const User = new Model({
- *  fields: {
+ *  columns: {
  *    role: { type: RoleEnum, allowNull: false, defaultValue: Role.Manager, exposed: true },
  *  },
- *  ...
  * });
  * ```
  */
