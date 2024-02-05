@@ -97,3 +97,20 @@ const Book: Model<BookModel> = new Model({
   }),
 });
 ```
+
+`query.ts`
+```ts
+import { exposeModel } from '@sequelize-graphql/core';
+import { Author } from './models';
+
+export default new GraphQLObjectType({
+  name: 'Query',
+  fields: {
+    ...exposeModel(Author, {
+      findById: 'author',
+      findByIds: 'authorsByIds',
+      pagination: 'authors',
+    }),
+  },
+});
+```
