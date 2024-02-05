@@ -1,5 +1,5 @@
 import type { Model as SequelizeModel, Identifier } from 'sequelize';
-import type Model from './Model';
+import type Model from './model';
 
 import { Op } from 'sequelize';
 import DataLoader from 'dataloader';
