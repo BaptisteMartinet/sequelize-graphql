@@ -4,7 +4,7 @@ import type { Model } from '@definitions/index';
 import assert from 'assert';
 import { GraphQLInputObjectType } from 'graphql';
 import { filterRecord, mapRecord } from '@utils/object';
-import { cacheGraphQLType } from './index';
+import { cacheGraphQLType } from '@schema/index';
 
 export default function genModelFilters<M extends SequelizeModel>(model: Model<M>) {
   const { name, definition } = model;
