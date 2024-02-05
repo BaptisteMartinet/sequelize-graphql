@@ -114,3 +114,32 @@ export default new GraphQLObjectType({
   },
 });
 ```
+
+`book.mutation.ts`
+```ts
+import { Book, Author, GenreEnum } from './models';
+
+export default new GraphQLObjectType({
+  name: 'BookMutation',
+  fields: {
+    create: {
+      type: new GraphQLNonNull(Book.type),
+      args: {
+        input: {
+          type: new GraphQLNonNull(new GraphQLInputObjectType({
+            name: 'CreateBookInput',
+            fields: {
+              authorId: { type: new GraphQLNonNull(GraphQLID) },
+              title: { type: new GraphQLNonNull(GraphQLString) },
+              genre: { type: new GraphQLNonNull(GenreEnum.gqlType) },
+            },
+          })),
+        },
+      },
+      async resolve(_, args) {
+        const { input: { authorId, title, genre } } = args;
+        await Author.ensureExistence(authorId);
+        return Book.model.create({ authorId, title, genre });
+      },
+    },
+```
