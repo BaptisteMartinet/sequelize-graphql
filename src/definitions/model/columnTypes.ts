@@ -12,6 +12,7 @@ import {
 import { DataTypes } from 'sequelize';
 import { mapRecord } from '@utils/object';
 import { getEnumEntries } from '@utils/enum';
+import { GraphlQLDate } from '@graphql-utils/scalars';
 import {
   IDFilter,
   IntFilter,
@@ -42,9 +43,33 @@ export const FLOAT = {
   filterGqlType: FloatFilter,
 } as const satisfies ColumnType;
 
+export const DECIMAL = {
+  gqlType: GraphQLFloat,
+  sequelizeType: DataTypes.DECIMAL,
+  filterGqlType: FloatFilter,
+} as const satisfies ColumnType;
+
+export const DOUBLE = {
+  gqlType: GraphQLFloat,
+  sequelizeType: DataTypes.DOUBLE,
+  filterGqlType: FloatFilter,
+} as const satisfies ColumnType;
+
 export const STRING = {
   gqlType: GraphQLString,
   sequelizeType: DataTypes.STRING,
+  filterGqlType: StringFilter,
+} as const satisfies ColumnType;
+
+export const CHAR = {
+  gqlType: GraphQLString,
+  sequelizeType: DataTypes.CHAR,
+  filterGqlType: StringFilter,
+} as const satisfies ColumnType;
+
+export const TEXT = {
+  gqlType: GraphQLString,
+  sequelizeType: DataTypes.TEXT,
   filterGqlType: StringFilter,
 } as const satisfies ColumnType;
 
@@ -97,3 +122,11 @@ export function ENUM(args: {
     filterGqlType: makeFiltersType(gqlType),
   };
 }
+
+// Custom types
+
+export const DATE = {
+  gqlType: GraphlQLDate,
+  sequelizeType: DataTypes.DATE,
+  filterGqlType: IntFilter,
+} as const satisfies ColumnType;
