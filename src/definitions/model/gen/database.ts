@@ -3,7 +3,7 @@ import type { ModelDefinition, ColumnDefinition, IDColumnDefinition } from '@def
 
 import { mapRecord } from '@utils/object';
 import { camelize } from '@utils/string';
-import { DefaultIDFieldDefinition } from '@definitions/index';
+import { DefaultIDFieldDefinition } from '@definitions/model/constants';
 
 export function makeModelAttributes(fields: Record<string, ColumnDefinition>): ModelAttributes {
   const attributes = mapRecord(fields, (field) => {

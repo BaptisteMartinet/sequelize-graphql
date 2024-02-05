@@ -7,7 +7,7 @@ import { GraphQLNonNull, GraphQLObjectType } from 'graphql';
 import { GraphlQLDate } from '@graphql-utils/index';
 import { mapRecord, filterRecord } from '@utils/object';
 import { unthunk } from '@utils/thunk';
-import { DefaultIDFieldDefinition } from '@definitions/index';
+import { DefaultIDFieldDefinition } from '@definitions/model/constants';
 import { genModelAssociationsFields } from './associations';
 
 export function genModelColumnsFields(
