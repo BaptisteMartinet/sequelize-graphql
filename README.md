@@ -30,7 +30,8 @@ import { Model, STRING, type InferSequelizeModel } from '@sequelize-graphql/core
 
 export interface AuthorModel extends InferSequelizeModel<AuthorModel> {
   id: CreationOptional<string>;
-  name: string;
+  firstname: string;
+  lastname: string;
 }
 
 const Author: Model<AuthorModel> = new Model({
