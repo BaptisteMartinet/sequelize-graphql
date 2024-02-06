@@ -98,7 +98,7 @@ const Book: Model<BookModel> = new Model({
   columns: {
     authorId: { type: ID, allowNull: false, exposed: true },
     title: { type: STRING, allowNull: false, exposed: true },
-    genre: { type: GENRE, allowNull: false, exposed: true },
+    genre: { type: GenreEnum, allowNull: false, exposed: true },
   },
   associations: () => ({
     author: {
