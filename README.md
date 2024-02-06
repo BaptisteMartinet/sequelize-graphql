@@ -9,7 +9,7 @@ Opinionated zero dependency library to sync Sequelize and GraphQL.
 > [!WARNING]
 > The library is in WIP until v2 is released. Issues and PRs are welcomed.
 
-# Getting Started
+## Getting Started
 Install sequelize-graphql from npm  
 
 With npm:
