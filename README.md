@@ -23,6 +23,16 @@ yarn add @sequelize-graphql/core sequelize graphql dataloader
 
 See [Peer dependencies breakdown](https://github.com/BaptisteMartinet/sequelize-graphql/wiki/Peer-dependencies-breakdown) for more information.
 
+## Key features
+- [x] Define your model in one place and have the Sequelize model as well as the GraphQL type auto-generated.
+- [x] GraphQL oriented (e.g A model must have a primary key named `id` wich is by default a UUID mapped to a GraphQLID).
+- [x] Associations handling (e.g An `hasMany` association will be exposed as a pagination).
+- [x] Pagination utility which is orderable and filterable.
+- [x] N+1 problem handling. Caching and batching is automatically handled.
+- [x] Schema related utilities.
+- [x] Sequelize utilities. 
+- [x] GraphQL utilities.
+
 ## Example usage
 A simple Library API.
 
