@@ -17,6 +17,7 @@ jobs:
           node-version: 20
           registry-url: 'https://registry.npmjs.org'
       - run: npx ci
+      - run: yarn test
       - run: yarn build
       - run: yarn publish --access public
         env:
