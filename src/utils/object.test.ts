@@ -14,4 +14,8 @@ describe('mapRecord', () => {
   it('should replace record values by their keys', () => {
     expect(mapRecord(baseObj, (val, key) => key)).toMatchObject({ a: 'a', b: 'b', c: 'c' });
   });
+
+  it('should fail', () => {
+    expect(false).toBe(true);
+  })
 });
