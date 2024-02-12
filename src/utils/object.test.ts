@@ -1,4 +1,4 @@
-import { mapRecord, filterRecord, reduceRecord } from './object';
+import { mapRecord, filterRecord, reduceRecord, makeRecordFromEntries } from './object';
 
 describe('mapRecord', () => {
   const baseObj = {
@@ -49,5 +49,16 @@ describe('reduceRecord', () => {
 
   it('should concatenate object keys', () => {
     expect(reduceRecord(baseObj, (prev, _, key) => prev + key, '')).toEqual('abc');
+  });
+});
+
+describe('makeRecordFromEntries', () => {
+  const entries = [
+    ['a', 1],
+    ['b', 2],
+  ] as const;
+
+  it('should create an object from entries', () => {
+    expect(makeRecordFromEntries(entries)).toMatchObject({ a: 1, b: 2 });
   });
 });
