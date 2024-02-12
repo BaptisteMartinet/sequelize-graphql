@@ -21,7 +21,7 @@ describe('filterRecord', () => {
     a: -10,
     b: -5,
     c: 42,
-  };
+  } as const;
 
   it('should filter out all values', () => {
     expect(filterRecord(baseObj, () => false)).toMatchObject({});
