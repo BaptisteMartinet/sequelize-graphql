@@ -11,7 +11,7 @@ import {
 } from 'graphql';
 import { DataTypes } from 'sequelize';
 import { mapRecord } from '@utils/object';
-import { getEnumEntries } from '@utils/enum';
+import { getEnumCleanObj } from '@utils/enum';
 import { GraphlQLDate } from '@graphql-utils/scalars';
 import {
   IDFilter,
@@ -108,7 +108,7 @@ export function ENUM(args: {
   description?: string;
 }): ColumnType {
   const { name, values, description } = args;
-  const entries = getEnumEntries(values);
+  const entries = getEnumCleanObj(values);
   const gqlType = new GraphQLEnumType({
     name,
     description,
