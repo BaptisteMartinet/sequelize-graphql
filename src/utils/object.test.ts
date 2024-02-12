@@ -1,4 +1,4 @@
-import { mapRecord } from './object';
+import { mapRecord, filterRecord } from './object';
 
 describe('mapRecord', () => {
   const baseObj = {
@@ -13,5 +13,25 @@ describe('mapRecord', () => {
 
   it('should replace record values by their keys', () => {
     expect(mapRecord(baseObj, (val, key) => key)).toMatchObject({ a: 'a', b: 'b', c: 'c' });
+  });
+});
+
+describe('filterRecord', () => {
+  const baseObj = {
+    a: -10,
+    b: -5,
+    c: 42,
+  };
+
+  it('should filter out all values', () => {
+    expect(filterRecord(baseObj, () => false)).toMatchObject({});
+  });
+
+  it('should filter out negative values', () => {
+    expect(filterRecord(baseObj, (val) => val >= 0)).toMatchObject({ c: 42 });
+  });
+
+  it('should filter out object keys that are not "b"', () => {
+    expect(filterRecord(baseObj, (_, key) => key === 'b')).toMatchObject({ b: -5 });
   });
 });
