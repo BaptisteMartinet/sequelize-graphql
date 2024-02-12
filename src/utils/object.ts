@@ -36,7 +36,7 @@ export function reduceRecord<KeyType extends string, ValueType, OutputType>(
 }
 
 export function makeRecordFromEntries<K extends string, V>(
-  entries: Iterable<[K, V]>,
+  entries: Iterable<readonly [K, V]>,
 ): Record<K, V> {
   return Array.from(entries).reduce(
     (acc, [key, val]) => {
