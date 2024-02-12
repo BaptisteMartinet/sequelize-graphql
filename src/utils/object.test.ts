@@ -1,4 +1,4 @@
-import { mapRecord, filterRecord } from './object';
+import { mapRecord, filterRecord, reduceRecord } from './object';
 
 describe('mapRecord', () => {
   const baseObj = {
@@ -33,5 +33,21 @@ describe('filterRecord', () => {
 
   it('should filter out object keys that are not "b"', () => {
     expect(filterRecord(baseObj, (_, key) => key === 'b')).toMatchObject({ b: -5 });
+  });
+});
+
+describe('reduceRecord', () => {
+  const baseObj = {
+    a: 1,
+    b: 2,
+    c: 3,
+  } as const;
+
+  it('should sum up object values', () => {
+    expect(reduceRecord(baseObj, (prev, value) => prev + value, 0)).toEqual(6);
+  });
+
+  it('should concatenate object keys', () => {
+    expect(reduceRecord(baseObj, (prev, _, key) => prev + key, '')).toEqual('abc');
   });
 });
