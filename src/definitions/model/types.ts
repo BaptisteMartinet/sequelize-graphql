@@ -16,19 +16,50 @@ import type {
 import type Model from './Model';
 
 export interface ColumnType {
+  /**
+   * The GraphQL type
+   */
   gqlType: GraphQLScalarType | GraphQLEnumType;
+  /**
+   * The Sequelize type
+   */
   sequelizeType: DataType;
+  /**
+   * The GraphQL filter type
+   */
   filterGqlType: GraphQLInputObjectType;
 }
 
 export interface ColumnDefinition {
+  /**
+   * The sequelize-graphql type
+   */
   type: ColumnType;
+  /**
+   * Adds a non-null constraint in DB and makes the GraphQL type non-nullable!.
+   */
   allowNull: boolean;
+  /**
+   * Expose the column as a field on the GraphQL type.
+   */
   exposed: boolean;
   defaultValue?: unknown;
   autoIncrement?: boolean;
+  /**
+   * Makes the field orderable.
+   * @default true
+   * @abstract Mainly used within paginations.
+   */
   orderable?: boolean;
+  /**
+   * Makes the field filterable.
+   * @default true
+   * @abstract Mainly used within paginations.
+   */
   filterable?: boolean;
+  /**
+   * Adds a description on the GraphQL field
+   */
   description?: string;
 }
 
@@ -39,6 +70,10 @@ export type AssociationType = 'belongsTo' | 'hasOne' | 'hasMany';
 export interface AssociationDefinition<ModelType extends SequelizeModel = SequelizeModel> {
   model: Model<ModelType>;
   type: AssociationType;
+  /**
+   * Expose the association as a field on the GraphQL type.
+   * `hasMany` is exposed as a filterable and orderable pagination.
+   */
   exposed: boolean;
   foreignKey?: string;
   deleteCascade?: boolean;
