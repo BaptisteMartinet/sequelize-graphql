@@ -1,11 +1,11 @@
 import { ModelLoader } from '@definitions/index';
 
 export interface Context {
-  loader: ModelLoader;
+  modelLoader: ModelLoader;
 }
 
 export function makeContext(): Context {
   return {
-    loader: new ModelLoader(),
+    modelLoader: new ModelLoader(),
   };
 }

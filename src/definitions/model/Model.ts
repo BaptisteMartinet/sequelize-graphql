@@ -121,7 +121,7 @@ export default class Model<M extends SequelizeModel> {
   public findByPkAllAttrs(identifier: Identifier, opts: { ctx?: Context } = {}) {
     const { ctx } = opts;
     if (ctx === undefined) return this.model.findByPk(identifier);
-    const loader = ctx.loader.getModelLoader(this);
+    const loader = ctx.modelLoader.getModelLoader(this);
     return loader.load(identifier).catch(() => null);
   }
 
