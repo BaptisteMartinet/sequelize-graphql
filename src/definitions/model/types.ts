@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { ThunkObj } from '@utils/thunk';
 
 import type {
@@ -37,8 +36,8 @@ export type IDColumnDefinition = Pick<ColumnDefinition, 'type' | 'autoIncrement'
 
 export type AssociationType = 'belongsTo' | 'hasOne' | 'hasMany';
 
-export interface AssociationDefinition {
-  model: Model<any>;
+export interface AssociationDefinition<ModelType extends SequelizeModel = SequelizeModel> {
+  model: Model<ModelType>;
   type: AssociationType;
   exposed: boolean;
   foreignKey?: string;
