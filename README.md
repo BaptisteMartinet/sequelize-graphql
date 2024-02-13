@@ -32,7 +32,7 @@ yarn add @sequelize-graphql/core sequelize graphql dataloader
 
 See [Peer dependencies breakdown](https://github.com/BaptisteMartinet/sequelize-graphql/wiki/Peer-dependencies-breakdown) for more information.
 
-Setup the context and you are good to go
+Setup the context and you are good to go:
 ```ts
 import { makeContext } from '@sequelize-graphql/core';
 
