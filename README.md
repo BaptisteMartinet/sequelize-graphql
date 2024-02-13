@@ -32,6 +32,19 @@ yarn add @sequelize-graphql/core sequelize graphql dataloader
 
 See [Peer dependencies breakdown](https://github.com/BaptisteMartinet/sequelize-graphql/wiki/Peer-dependencies-breakdown) for more information.
 
+Setup the context and you are good to go
+```ts
+import { makeContext } from '@sequelize-graphql/core';
+
+// Apollo Server example
+const { url } = await startStandaloneServer(server, {
+  context: async ({ req, res }) => ({
+    ...makeContext(), // A simple object containing everyting sequelize-graphql needs to work properly.
+    authToken: req.headers.authorization, // Other stuff you want to place in the context like an auth token.
+  }),
+});
+```
+
 ## Example usage
 A simple Library API.
 
