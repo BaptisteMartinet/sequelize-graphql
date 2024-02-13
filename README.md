@@ -9,6 +9,15 @@ Opinionated zero dependency library to sync Sequelize and GraphQL.
 > [!WARNING]
 > The library is in WIP until v2 is released. Issues and PRs are welcomed.
 
+## Key features
+- [x] Define your model in one place and have the Sequelize model as well as the GraphQL type auto-generated.
+- [x] GraphQL oriented (e.g A model must have a primary key named `id` wich is by default a UUID mapped to a GraphQLID).
+- [x] Association handling (e.g An `hasMany` association will be exposed as a pagination).
+- [x] Pagination utility which is orderable, filterable, and type safe.
+- [x] N+1 query handling. Caching and batching is automatically handled.
+- [x] Sequelize utilities. 
+- [x] GraphQL utilities.
+
 ## Getting Started
 Install sequelize-graphql from npm  
 
@@ -22,15 +31,6 @@ yarn add @sequelize-graphql/core sequelize graphql dataloader
 ```
 
 See [Peer dependencies breakdown](https://github.com/BaptisteMartinet/sequelize-graphql/wiki/Peer-dependencies-breakdown) for more information.
-
-## Key features
-- [x] Define your model in one place and have the Sequelize model as well as the GraphQL type auto-generated.
-- [x] GraphQL oriented (e.g A model must have a primary key named `id` wich is by default a UUID mapped to a GraphQLID).
-- [x] Association handling (e.g An `hasMany` association will be exposed as a pagination).
-- [x] Pagination utility which is orderable, filterable, and type safe.
-- [x] N+1 query handling. Caching and batching is automatically handled.
-- [x] Sequelize utilities. 
-- [x] GraphQL utilities.
 
 ## Example usage
 A simple Library API.
