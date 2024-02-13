@@ -17,7 +17,7 @@ import type {
 import type Model from './Model';
 
 export interface ColumnType {
-  gqlType: GraphQLScalarType | GraphQLEnumType; // TODO infer typing?
+  gqlType: GraphQLScalarType | GraphQLEnumType;
   sequelizeType: DataType;
   filterGqlType: GraphQLInputObjectType;
 }
