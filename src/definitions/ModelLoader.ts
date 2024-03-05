@@ -24,11 +24,10 @@ export default class ModelLoader {
         const items = await sequelizeModel.findAll({
           where: { [primaryKeyAttribute]: { [Op.in]: keys } } as never,
         });
+        const map = new Map(items.map((item) => [item.dataValues[primaryKeyAttribute], item]));
         return keys.map(
-          (key) =>
-            items.find((item) => item.dataValues[primaryKeyAttribute] === key) ??
-            new Error(`${model.formatIdentifier(key)} could not be loaded`),
-        ); // TODO slow for huge batches
+          (key) => map.get(key) ?? new Error(`${model.formatIdentifier(key)} could not be loaded`),
+        );
       },
       { name: loaderName },
     );
