@@ -1,8 +1,5 @@
 import type { WhereAttributeHash, WhereOptions } from 'sequelize';
-import type {
-  GraphQLInputFieldConfigMap,
-  GraphQLNamedInputType,
-} from 'graphql';
+import type { GraphQLInputFieldConfigMap, GraphQLNamedInputType } from 'graphql';
 
 import assert from 'assert';
 import { Op } from 'sequelize';
@@ -103,9 +100,7 @@ export function makeFiltersType(
   };
   const fields: GraphQLInputFieldConfigMap = mapRecord(filters, (def) => {
     const { transformValueType, description } = def;
-    const transformedType = transformValueType
-      ? transformValueType(type)
-      : type;
+    const transformedType = transformValueType ? transformValueType(type) : type;
     return { type: transformedType, description };
   });
   return new GraphQLInputObjectType({
@@ -115,20 +110,12 @@ export function makeFiltersType(
 }
 
 export const IntFilter = makeFiltersType(GraphQLInt, NumericFilterDefinitions);
-export const FloatFilter = makeFiltersType(
-  GraphQLFloat,
-  NumericFilterDefinitions,
-);
-export const StringFilter = makeFiltersType(
-  GraphQLString,
-  StringFilterDefinitions,
-);
+export const FloatFilter = makeFiltersType(GraphQLFloat, NumericFilterDefinitions);
+export const StringFilter = makeFiltersType(GraphQLString, StringFilterDefinitions);
 export const IDFilter = makeFiltersType(GraphQLID);
 export const BooleanFilter = makeFiltersType(GraphQLBoolean);
 
-export function resolveFilter(
-  filter: Record<FilterKey, unknown>,
-): WhereOptions {
+export function resolveFilter(filter: Record<FilterKey, unknown>): WhereOptions {
   const conditions: Array<WhereOptions> = [];
   for (const filterKey in filter) {
     assertFilterKey(filterKey);
