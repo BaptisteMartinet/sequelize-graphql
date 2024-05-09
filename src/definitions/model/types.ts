@@ -67,8 +67,8 @@ export type IDColumnDefinition = Pick<ColumnDefinition, 'type' | 'autoIncrement'
 
 export type AssociationType = 'belongsTo' | 'hasOne' | 'hasMany';
 
-export interface AssociationDefinition<ModelType extends SequelizeModel = SequelizeModel> {
-  model: Model<ModelType>;
+export interface AssociationDefinition {
+  model: Model<any>;
   type: AssociationType;
   /**
    * Expose the association as a field on the GraphQL type.
