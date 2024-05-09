@@ -17,7 +17,6 @@ export type ExposeField = string | false;
 export interface ExposeOpts {
   /**
    * Expose a field to get the provided Model by id.
-   * {@link ExposeField}
    */
   findById: ExposeField;
   /**
@@ -26,7 +25,6 @@ export interface ExposeOpts {
   findByIds: ExposeField;
   /**
    * Expose a field to get a pagination of the provided Model.
-   * {@link ExposeField}
    */
   pagination: ExposeField;
 }
