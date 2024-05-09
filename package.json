@@ -1,6 +1,6 @@
 {
   "name": "@sequelize-graphql/core",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "description": "Lightweight library to sync sequelize and graphql",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
