@@ -1,4 +1,4 @@
-import { Model, InferAttributes, InferCreationAttributes } from 'sequelize';
+import type { Model, InferAttributes, InferCreationAttributes } from 'sequelize';
 
 /**
  * @description Used to infer Model typings
