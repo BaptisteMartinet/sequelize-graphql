@@ -1,7 +1,7 @@
 import type { Model, InferAttributes, InferCreationAttributes, CreationOptional } from 'sequelize';
 
 /**
- * @description A simplified version of sequelize `Model<InferAttributes<M>, InferCreationAttributes<M>>` utility type
+ * @description Used to infer Model attributes typings
  * @example
  * ```ts
  * export interface BookModel extends InferModelAttributes<BookModel> {
@@ -26,7 +26,7 @@ export interface DefaultAttributes {
 }
 
 /**
- * @description InferModelAttributes but with defaults attributes (see {@link DefaultAttributes}).
+ * @description Same as InferModelAttributes but with default attributes (see {@link DefaultAttributes}).
  * @example
  * ```ts
  * export interface BookModel extends InferModelAttributesWithDefaults<BookModel> {
