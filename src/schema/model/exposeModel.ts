@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { GraphQLFieldConfig } from 'graphql';
+import type { GraphQLFieldConfig, GraphQLNamedOutputType } from 'graphql';
 import type { Identifier } from 'sequelize';
 import type { Model } from '@definitions/index';
 import type { Context } from '@schema/index';
@@ -20,20 +20,33 @@ export interface ExposedFields {
   pagination: ExposedField;
 }
 
-export default function exposeModel(model: Model<any>, exposedFields: ExposedFields) {
+export interface ExposeModelOptions {
+  outputType?: GraphQLNamedOutputType;
+}
+
+export default function exposeModel(
+  model: Model<any>,
+  exposedFields: ExposedFields,
+  opts: ExposeModelOptions = {},
+) {
   const { findById, findByIds, pagination } = exposedFields;
+  const outputType = opts.outputType ?? model.type;
   return {
-    ...(findById ? { [findById]: genModelFindById(model) } : null),
-    ...(findByIds ? { [findByIds]: genModelFindByIds(model) } : null),
-    ...(pagination ? { [pagination]: genModelOffsetPagination(model) } : null),
+    ...(findById ? { [findById]: genModelFindById(model, { outputType }) } : null),
+    ...(findByIds ? { [findByIds]: genModelFindByIds(model, { outputType }) } : null),
+    ...(pagination ? { [pagination]: genModelOffsetPagination(model, { outputType }) } : null),
   } as const satisfies Record<string, GraphQLFieldConfig<unknown, Context>>;
 }
 
 function genModelFindById(
   model: Model<any>,
+  opts: {
+    outputType?: GraphQLNamedOutputType;
+  } = {},
 ): GraphQLFieldConfig<unknown, Context, { id: Identifier }> {
+  const outputType = opts.outputType ?? model.type;
   return {
-    type: new GraphQLNonNull(model.type),
+    type: new GraphQLNonNull(outputType),
     args: {
       id: { type: new GraphQLNonNull(model.idType.gqlType) },
     },
@@ -46,9 +59,13 @@ function genModelFindById(
 
 function genModelFindByIds(
   model: Model<any>,
+  opts: {
+    outputType?: GraphQLNamedOutputType;
+  } = {},
 ): GraphQLFieldConfig<unknown, Context, { ids: Array<Identifier> }> {
+  const outputType = opts.outputType ?? model.type;
   return {
-    type: new GraphQLNonNull(new GraphQLNonNullList(model.type)),
+    type: new GraphQLNonNull(new GraphQLNonNullList(outputType)),
     args: {
       ids: { type: new GraphQLNonNull(new GraphQLNonNullList(model.idType.gqlType)) },
     },
