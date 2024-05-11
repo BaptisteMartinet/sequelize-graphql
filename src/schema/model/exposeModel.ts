@@ -6,7 +6,6 @@ import type { Context } from '@schema/index';
 
 import { GraphQLNonNull } from 'graphql';
 import { GraphQLNonNullList } from '@graphql-utils/index';
-import { reduceRecord } from '@utils/object';
 import { genModelOffsetPagination } from '@schema/index';
 
 /**
@@ -29,30 +28,13 @@ export interface ExposeOpts {
   pagination: ExposeField;
 }
 
-export default function exposeModel(model: Model<any>, opts: ExposeOpts) {
-  return reduceRecord(
-    opts,
-    (config, exposition, exposeField) => {
-      if (exposition === false) return config;
-      config[exposition] = genExposition(model, exposeField);
-      return config;
-    },
-    {} as Record<string, GraphQLFieldConfig<unknown, Context>>,
-  );
-}
-
-function genExposition(model: Model<any>, exposeField: keyof ExposeOpts) {
-  switch (exposeField) {
-    case 'findById':
-      return genModelFindById(model);
-    case 'findByIds':
-      return genModelFindByIds(model);
-    case 'pagination':
-      return genModelOffsetPagination(model);
-    default:
-      break;
-  }
-  throw new Error(`Unsupported expose field: ${exposeField}`);
+export default function exposeModel(model: Model<any>, expositions: ExposeOpts) {
+  const { findById, findByIds, pagination } = expositions;
+  return {
+    ...(findById ? { [findById]: genModelFindById(model) } : null),
+    ...(findByIds ? { [findByIds]: genModelFindByIds(model) } : null),
+    ...(pagination ? { [pagination]: genModelOffsetPagination(model) } : null),
+  } as const satisfies Record<string, GraphQLFieldConfig<unknown, Context>>;
 }
 
 function genModelFindById(
