@@ -8,23 +8,15 @@ import { GraphQLNonNull } from 'graphql';
 import { GraphQLNonNullList } from '@graphql-utils/index';
 import { genModelOffsetPagination } from '@schema/index';
 
-/**
- * Either the name of the exposed field or false to disable the exposition
- */
+/** Either the name of the exposed field or false to disable the exposition */
 export type ExposeField = string | false;
 
 export interface ExposeOpts {
-  /**
-   * Expose a field to get the provided Model by id.
-   */
+  /** Expose a field to get the provided Model by id. */
   findById: ExposeField;
-  /**
-   * Expose a field to get the provided Model by ids.
-   */
+  /** Expose a field to get the provided Model by ids. */
   findByIds: ExposeField;
-  /**
-   * Expose a field to get a pagination of the provided Model.
-   */
+  /** Expose a field to get a pagination of the provided Model. */
   pagination: ExposeField;
 }
 
