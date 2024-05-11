@@ -9,19 +9,19 @@ import { GraphQLNonNullList } from '@graphql-utils/index';
 import { genModelOffsetPagination } from '@schema/index';
 
 /** Either the name of the exposed field or false to disable the exposition */
-export type ExposeField = string | false;
+export type ExposedField = string | false;
 
-export interface ExposeOpts {
+export interface ExposedFields {
   /** Expose a field to get the provided Model by id. */
-  findById: ExposeField;
+  findById: ExposedField;
   /** Expose a field to get the provided Model by ids. */
-  findByIds: ExposeField;
+  findByIds: ExposedField;
   /** Expose a field to get a pagination of the provided Model. */
-  pagination: ExposeField;
+  pagination: ExposedField;
 }
 
-export default function exposeModel(model: Model<any>, expositions: ExposeOpts) {
-  const { findById, findByIds, pagination } = expositions;
+export default function exposeModel(model: Model<any>, exposedFields: ExposedFields) {
+  const { findById, findByIds, pagination } = exposedFields;
   return {
     ...(findById ? { [findById]: genModelFindById(model) } : null),
     ...(findByIds ? { [findByIds]: genModelFindByIds(model) } : null),
