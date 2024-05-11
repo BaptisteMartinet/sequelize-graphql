@@ -38,7 +38,7 @@ export default function exposeModel(
   } as const satisfies Record<string, GraphQLFieldConfig<unknown, Context>>;
 }
 
-function genModelFindById(
+export function genModelFindById(
   model: Model<any>,
   opts: {
     outputType?: GraphQLNamedOutputType;
@@ -57,7 +57,7 @@ function genModelFindById(
   };
 }
 
-function genModelFindByIds(
+export function genModelFindByIds(
   model: Model<any>,
   opts: {
     outputType?: GraphQLNamedOutputType;
