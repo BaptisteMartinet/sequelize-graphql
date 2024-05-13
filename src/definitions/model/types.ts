@@ -13,7 +13,6 @@ import type {
   GraphQLScalarType,
   GraphQLInputObjectType,
 } from 'graphql';
-import type { Context } from '@schema/context';
 import type Model from './Model';
 
 export interface ColumnType {
@@ -93,7 +92,7 @@ export interface ModelDefinition<ModelType extends SequelizeModel> {
   timestamps: boolean;
   sequelize: Sequelize;
   associations?: () => Record<string, AssociationDefinition>;
-  fields?: ThunkObj<GraphQLFieldConfig<ModelType, Context>>;
+  fields?: ThunkObj<GraphQLFieldConfig<ModelType, any>>;
   description?: string;
   tableName?: string;
   indexes?: readonly ModelIndexesOptions[];
