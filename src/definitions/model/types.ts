@@ -1,4 +1,4 @@
-import type { ThunkObj } from '@utils/thunk';
+import type { Thunk } from '@utils/thunk';
 
 import type {
   Sequelize,
@@ -8,10 +8,10 @@ import type {
   Association,
 } from 'sequelize';
 import type {
-  GraphQLFieldConfig,
   GraphQLEnumType,
   GraphQLScalarType,
   GraphQLInputObjectType,
+  GraphQLFieldConfigMap,
 } from 'graphql';
 import type Model from './Model';
 
@@ -92,7 +92,7 @@ export interface ModelDefinition<ModelType extends SequelizeModel> {
   timestamps: boolean;
   sequelize: Sequelize;
   associations?: () => Record<string, AssociationDefinition>;
-  fields?: ThunkObj<GraphQLFieldConfig<ModelType, any>>;
+  fields?: Thunk<GraphQLFieldConfigMap<ModelType, any>>;
   description?: string;
   tableName?: string;
   indexes?: readonly ModelIndexesOptions[];
