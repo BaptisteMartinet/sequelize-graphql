@@ -80,10 +80,10 @@ export interface AssociationDefinition {
   description?: string;
 }
 
-export type AssocationSpecs = {
+export interface AssocationSpecs {
   sequelizeAssociation: Association;
   associationDef: AssociationDefinition;
-};
+}
 
 export interface ModelDefinition<ModelType extends SequelizeModel> {
   name: string;
