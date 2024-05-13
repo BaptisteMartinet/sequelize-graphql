@@ -80,7 +80,7 @@ export interface AssociationDefinition {
   description?: string;
 }
 
-export interface AssocationSpecs {
+export interface AssociationSpecs {
   sequelizeAssociation: Association;
   associationDef: AssociationDefinition;
 }

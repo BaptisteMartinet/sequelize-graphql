@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Model as SequelizeModel, Association, WhereOptions } from 'sequelize';
 import type { GraphQLFieldConfig, GraphQLFieldConfigMap } from 'graphql';
-import type { AssocationSpecs } from '@definitions/index';
+import type { AssociationSpecs } from '@definitions/index';
 import type { Context } from '@schema/index';
 
 import { makeRecordFromEntries, mapRecord } from '@utils/object';
@@ -24,7 +24,7 @@ function genAssociationWhere(args: {
   }
 }
 
-function genBelongsTo(associationSpecs: AssocationSpecs): GraphQLFieldConfig<any, Context> {
+function genBelongsTo(associationSpecs: AssociationSpecs): GraphQLFieldConfig<any, Context> {
   const { sequelizeAssociation, associationDef } = associationSpecs;
   const { model: targetModel, description } = associationDef;
   return {
@@ -39,7 +39,7 @@ function genBelongsTo(associationSpecs: AssocationSpecs): GraphQLFieldConfig<any
   };
 }
 
-function genHasOne(associationSpecs: AssocationSpecs): GraphQLFieldConfig<any, Context> {
+function genHasOne(associationSpecs: AssociationSpecs): GraphQLFieldConfig<any, Context> {
   const { sequelizeAssociation, associationDef } = associationSpecs;
   const { model: targetModel, description } = associationDef;
   return {
@@ -52,7 +52,7 @@ function genHasOne(associationSpecs: AssocationSpecs): GraphQLFieldConfig<any, C
   };
 }
 
-function genHasMany(associationSpecs: AssocationSpecs): GraphQLFieldConfig<any, Context> {
+function genHasMany(associationSpecs: AssociationSpecs): GraphQLFieldConfig<any, Context> {
   const { sequelizeAssociation, associationDef } = associationSpecs;
   const { model: targetModel, description } = associationDef;
   return genModelOffsetPagination(targetModel, {
@@ -65,7 +65,7 @@ function genHasMany(associationSpecs: AssocationSpecs): GraphQLFieldConfig<any, 
 }
 
 export function genModelAssociationsFields(
-  associations: Map<string, AssocationSpecs>,
+  associations: Map<string, AssociationSpecs>,
 ): GraphQLFieldConfigMap<unknown, Context> {
   if (associations.size <= 0) return {};
   const exposedAssociations = Array.from(associations).filter(
