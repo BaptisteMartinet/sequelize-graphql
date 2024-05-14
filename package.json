@@ -17,7 +17,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts",
-    "dev": "yarn build --watch",
+    "dev": "yarn build --watch --onSuccess \"yalc push\"",
     "test": "jest"
   },
   "devDependencies": {
