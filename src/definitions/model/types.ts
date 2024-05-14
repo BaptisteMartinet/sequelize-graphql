@@ -71,7 +71,8 @@ export interface ModelDefinition<ModelType extends SequelizeModel> {
   name: string;
   id?: IDColumnDefinition;
   columns: Record<string, ColumnDefinition>;
-  timestamps: boolean;
+  /** @default true */
+  timestamps?: boolean;
   sequelize: Sequelize;
   associations?: () => Record<string, AssociationDefinition>;
   fields?: Thunk<GraphQLFieldConfigMap<ModelType, any>>;

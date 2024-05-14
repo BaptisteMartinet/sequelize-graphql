@@ -35,7 +35,7 @@ export function genModelColumnsFields(
 export function genModelBaseFields(
   definition: Pick<ModelDefinition<never>, 'id' | 'timestamps' | 'paranoid'>,
 ): GraphQLFieldConfigMap<unknown, unknown> {
-  const { id: idFieldDefinition, timestamps, paranoid } = definition;
+  const { id: idFieldDefinition, timestamps = true, paranoid } = definition;
   const idFieldType = idFieldDefinition?.type.gqlType ?? DefaultIDFieldDefinition.type.gqlType;
   return {
     id: { type: new GraphQLNonNull(idFieldType) },

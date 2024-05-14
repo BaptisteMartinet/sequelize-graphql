@@ -19,23 +19,22 @@ export const OrderTypeEnum = new GraphQLEnumType({
 });
 
 export function genModelFieldsEnum<M extends SequelizeModel>(model: Model<M>) {
-  const orderableColumns = filterRecord(
-    model.definition.columns,
-    ({ exposed, orderable }) => orderable ?? exposed,
-  );
+  const { name, definition } = model;
+  const { columns, timestamps = true, paranoid } = definition;
+  const orderableColumns = filterRecord(columns, ({ exposed, orderable }) => orderable ?? exposed);
   return cacheGraphQLType(
     new GraphQLEnumType({
-      name: model.name + 'Fields',
+      name: name + 'Fields',
       values: {
         id: { value: 'id' },
         ...mapRecord(orderableColumns, (_, key) => ({ value: key })),
-        ...(model.definition.timestamps
+        ...(timestamps
           ? {
               createdAt: { value: 'createdAt' },
               updatedAt: { value: 'updatedAt' },
             }
           : null),
-        ...(model.definition.paranoid === true
+        ...(paranoid
           ? {
               deletedAt: { value: 'deletedAt' },
             }
