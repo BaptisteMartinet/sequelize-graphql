@@ -3,6 +3,7 @@ import type Model from './model';
 
 import { Op } from 'sequelize';
 import DataLoader from 'dataloader';
+import { formatModelId } from './model';
 
 export default class ModelLoader {
   private _loaders = new Map<string /*ModelName*/, DataLoader<Identifier, unknown>>();
@@ -26,7 +27,7 @@ export default class ModelLoader {
         });
         const map = new Map(items.map((item) => [item.dataValues[primaryKeyAttribute], item]));
         return keys.map(
-          (key) => map.get(key) ?? new Error(`${model.formatIdentifier(key)} could not be loaded`),
+          (key) => map.get(key) ?? new Error(`${formatModelId(model, key)} could not be loaded`),
         );
       },
       { name: loaderName },

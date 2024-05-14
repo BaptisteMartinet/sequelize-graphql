@@ -6,6 +6,7 @@ import { GraphQLObjectType } from 'graphql';
 import { unthunk } from '@utils/thunk.js';
 import { DefaultIDFieldDefinition } from './constants.js';
 import { genDatabaseModel, genModelGraphQLType } from './gen';
+import { formatModelId } from './log.js';
 
 export default class Model<M extends SequelizeModel> {
   private _definition;
@@ -108,14 +109,6 @@ export default class Model<M extends SequelizeModel> {
   }
 
   /**
-   * @param identifier
-   * @returns A string formatted like so "[ModelName]#[identifier]" (e.g. "User#1234")
-   */
-  public formatIdentifier(identifier: Identifier) {
-    return this.name + '#' + identifier;
-  }
-
-  /**
    * Equivalent to `model.findByPk()` but uses loaders for caching and batching when ctx is provided.
    */
   public findByPkAllAttrs(identifier: Identifier, opts: { ctx?: Context } = {}) {
@@ -132,7 +125,7 @@ export default class Model<M extends SequelizeModel> {
     const instance = await this.findByPkAllAttrs(identifier, opts);
     if (instance === null)
       throw new Error(
-        `EnsureExistence check failed for model ${this.formatIdentifier(identifier)}`,
+        `EnsureExistence check failed for model ${formatModelId(this, identifier)}`,
       );
     return instance;
   }
