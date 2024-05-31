@@ -1,11 +1,11 @@
 import { ModelLoader } from '@definitions/index';
+import { memoizer } from '@utils/memoize';
 
-export interface Context {
-  modelLoader: ModelLoader;
-}
+export type Context = ReturnType<typeof makeContext>;
 
-export function makeContext(): Context {
+export function makeContext() {
   return {
     modelLoader: new ModelLoader(),
-  };
+    memoized: memoizer(),
+  } as const;
 }
