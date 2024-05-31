@@ -1,11 +1,9 @@
 import { ModelLoader } from '@definitions/index';
 
-export interface Context {
-  modelLoader: ModelLoader;
-}
+export type Context = ReturnType<typeof makeContext>;
 
-export function makeContext(): Context {
+export function makeContext() {
   return {
     modelLoader: new ModelLoader(),
-  };
+  } as const;
 }
