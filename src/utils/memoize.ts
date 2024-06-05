@@ -64,7 +64,7 @@ export function attachMemoizerArgsFormatter<ArgsType extends Array<unknown>, Ret
  * @returns A function that can memoize any given function
  */
 export function memoizer() {
-  const cache = new Map<Symbol, Map<string, unknown>>();
+  const cache = new Map<symbol, Map<string, unknown>>();
 
   return <ArgsType extends Array<any>, ReturnType>(
     func: (...args: ArgsType) => ReturnType,
