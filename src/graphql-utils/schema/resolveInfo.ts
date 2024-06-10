@@ -37,6 +37,18 @@ function descendSelection(
 /**
  * Given a resolve info object, return the selected fields.
  * @returns A Set containing the selected fields
+ * @example
+ * GraphQL query:
+ * ```gql
+ * somePagination {
+ *  field1
+ *  field2 {
+ *    field3
+ *  }
+ * }
+ * ```
+ * Result:
+ * `[ 'field1', 'field2.field3' ]`
  */
 export function getResolveInfoSelectedFields(
   info: GraphQLResolveInfo,
