@@ -10,7 +10,8 @@ import type { GenericOrderBy } from '@schema/index';
 
 import { Op } from 'sequelize';
 import { GraphQLInt, GraphQLNonNull, GraphQLObjectType } from 'graphql';
-import { GraphQLNonNullList } from '@graphql-utils/index';
+import { GraphQLNonNullList, getResolveInfoSelectedFieldsRoot } from '@graphql-utils/index';
+import { promiseAllRecord } from '@utils/promise';
 import { resolveFilters } from '@definitions/model/columnTypesFilters';
 import {
   genModelOrderBy,
@@ -54,7 +55,7 @@ export default function genModelOffsetPagination<M extends SequelizeModel>(
       order: { type: new GraphQLNonNullList(genModelOrderBy(model)) },
       filters: { type: genModelFilters(model) },
     },
-    async resolve(source, args, ctx) {
+    async resolve(source, args, ctx, info) {
       const { offset, limit, order, filters, ...customArgs } = args;
 
       const whereConditions: Array<WhereOptions> = [];
@@ -62,13 +63,17 @@ export default function genModelOffsetPagination<M extends SequelizeModel>(
       if (filters) whereConditions.push(resolveFilters(filters));
       const where = { [Op.and]: whereConditions };
 
-      const { rows: nodes, count } = await model.model.findAndCountAll({
-        offset: offset ?? undefined,
-        limit: limit ?? undefined,
-        order: order?.map(convertOrderByToSequelizeOrderItem),
-        where,
-      });
-      return { nodes, count };
+      const selectedFields = getResolveInfoSelectedFieldsRoot(info);
+      const nodes = selectedFields.has('nodes')
+        ? model.model.findAll({
+            offset: offset ?? undefined,
+            limit: limit ?? undefined,
+            order: order?.map(convertOrderByToSequelizeOrderItem),
+            where,
+          })
+        : null;
+      const count = selectedFields.has('count') ? model.model.count({ where }) : null;
+      return promiseAllRecord({ nodes, count });
     },
   };
 }
