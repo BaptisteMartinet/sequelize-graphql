@@ -26,7 +26,6 @@ export function genModelFieldsEnum<M extends SequelizeModel>(model: Model<M>) {
     new GraphQLEnumType({
       name: name + 'Fields',
       values: {
-        id: { value: 'id' },
         ...mapRecord(orderableColumns, (_, key) => ({ value: key })),
         ...(timestamps
           ? {
