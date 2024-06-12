@@ -1,8 +1,8 @@
 import type { Model as SequelizeModel, OrderItem } from 'sequelize';
 
 import { GraphQLEnumType, GraphQLInputObjectType, GraphQLNonNull } from 'graphql';
-import { Model } from '@definitions/index';
 import { filterRecord, mapRecord } from '@utils/object';
+import { Model } from '@definitions/index';
 import { cacheGraphQLType } from '@schema/index';
 
 export enum OrderType {
