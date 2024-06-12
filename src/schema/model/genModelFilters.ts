@@ -16,7 +16,6 @@ export default function genModelFilters<M extends SequelizeModel>(model: Model<M
       name: name + 'Filters',
       description: `The ${name} model filters`,
       fields: {
-        id: { type: model.idType.filterGqlType },
         ...mapRecord(filterableColumns, (column) => {
           const filterType = column?.type.filterGqlType;
           assert(filterType); // Used for type safety. Should never trigger.
