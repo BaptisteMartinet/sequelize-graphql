@@ -74,7 +74,7 @@ export interface BookModel extends InferModelAttributesWithDefaults<BookModel> {
 const Book: Model<BookModel> = new Model({
   name: 'Book',
   columns: {
-    authorId: { type: ID, allowNull: false, exposed: true },
+    authorId: { type: ID, allowNull: false, exposed: false },
     title: { type: STRING, allowNull: false, exposed: true },
     genre: { type: GenreEnum, defaultValue: Genre.Action, exposed: true },
   },
@@ -111,7 +111,6 @@ type Book {
   id: ID!
   createdAt: Date!
   updatedAt: Date!
-  authorId: ID!
   title: String!
   genre: Genre
   author: Author
