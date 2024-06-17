@@ -15,6 +15,7 @@ Opinionated zero dependency library to sync Sequelize and GraphQL.
 - [x] Association handling (e.g An `hasMany` association will be exposed as a pagination).
 - [x] Pagination utility which is orderable, filterable, and type safe.
 - [x] N+1 query handling. Caching and batching is automatically handled.
+- [x] Enums handling.
 - [x] Sequelize utilities. 
 - [x] GraphQL utilities.
 
@@ -45,63 +46,27 @@ const { url } = await startStandaloneServer(server, {
 });
 ```
 
-## Example usage
-A simple Library API.
-
-`Author.model.ts`
+## Example
+One can easily define a model like so:
 ```ts
-import { CreationOptional } from 'sequelize';
-import { Model, STRING, type InferSequelizeModel } from '@sequelize-graphql/core';
+import type { ForeignKey } from 'sequelize';
+import type { IdType, InferModelAttributesWithDefaults } from '@sequelize-graphql/core';
 
-export interface AuthorModel extends InferSequelizeModel<AuthorModel> {
-  id: CreationOptional<string>;
-  firstname: string;
-  lastname: string;
-}
-
-const Author: Model<AuthorModel> = new Model({
-  name: 'Author',
-  columns: {
-    firstname: { type: STRING, allowNull: false, exposed: true, description: '...' },
-    lastname: { type: STRING, allowNull: false, exposed: true },
-  },
-  fields: {
-    fullname: {
-      type: new GraphQLNonNull(GraphQLString),
-      resolve(author, args, ctx) {
-        const { firstname, lastname } = author;
-        return `${firstname} ${lastname}`;
-      },
-    },
-  },
-  associations: () => ({
-    books: {
-      model: Book,
-      type: 'hasMany',
-      exposed: true,
-    },
-  }),
-});
-```
-`Book.model.ts`
-```ts
-import { CreationOptional } from 'sequelize';
-import { Model, ENUM, ID, STRING, type InferSequelizeModel } from '@sequelize-graphql/core';
-import { Author } from './models';
+import { GraphQLNonNull, GraphQLString } from 'graphql';
+import { Model, STRING, ID, ENUM } from '@sequelize-graphql/core';
+import sequelize from '@db/index';
+import { Author, Rating } from '@models/index';
 
 export enum Genre {
-  Thriller = 'Thriller',
+  Action = 'Action',
+  Fantasy = 'Fantasy',
   Horror = 'Horror',
 }
 
-export const GenreEnum = ENUM({
-  name: 'Genre',
-  values: Genre,
-});
+export const GenreEnum = ENUM({ name: 'Genre', values: Genre });
 
-export interface BookModel extends InferSequelizeModel<BookModel> {
-  id: CreationOptional<string>;
-  authorId: ForeignKey<string>;
+export interface BookModel extends InferModelAttributesWithDefaults<BookModel> {
+  authorId: ForeignKey<IdType>;
   title: string;
   genre: Genre;
 }
@@ -111,7 +76,17 @@ const Book: Model<BookModel> = new Model({
   columns: {
     authorId: { type: ID, allowNull: false, exposed: true },
     title: { type: STRING, allowNull: false, exposed: true },
-    genre: { type: GenreEnum, allowNull: false, exposed: true },
+    genre: { type: GenreEnum, allowNull: true, defaultValue: Genre.Action, exposed: true },
+  },
+  fields: {
+    fullTitle: {
+      type: new GraphQLNonNull(GraphQLString),
+      async resolve(book, args, ctx) {
+        const { authorId, title } = book;
+        const author = await Author.ensureExistence(authorId, { ctx });
+        return `${title} by ${author.name}`;
+      },
+    },
   },
   associations: () => ({
     author: {
@@ -119,52 +94,28 @@ const Book: Model<BookModel> = new Model({
       type: 'belongsTo',
       exposed: true,
     },
-  }),
-});
-```
 
-`query.ts`
-```ts
-import { exposeModel } from '@sequelize-graphql/core';
-import { Author } from './models';
-
-export default new GraphQLObjectType({
-  name: 'Query',
-  fields: {
-    ...exposeModel(Author, {
-      findById: 'author',
-      findByIds: 'authorsByIds',
-      pagination: 'authors',
-    }),
-  },
-});
-```
-
-`book.mutation.ts`
-```ts
-import { Book, Author, GenreEnum } from './models';
-
-export default new GraphQLObjectType({
-  name: 'BookMutation',
-  fields: {
-    create: {
-      type: new GraphQLNonNull(Book.type),
-      args: {
-        input: {
-          type: new GraphQLNonNull(new GraphQLInputObjectType({
-            name: 'CreateBookInput',
-            fields: {
-              authorId: { type: new GraphQLNonNull(GraphQLID) },
-              title: { type: new GraphQLNonNull(GraphQLString) },
-              genre: { type: new GraphQLNonNull(GenreEnum.gqlType) },
-            },
-          })),
-        },
-      },
-      async resolve(_, args) {
-        const { input: { authorId, title, genre } } = args;
-        await Author.ensureExistence(authorId);
-        return Book.model.create({ authorId, title, genre });
-      },
+    ratings: {
+      model: Rating,
+      type: 'hasMany',
+      exposed: true,
     },
+  }),
+  timestamps: true,
+  sequelize,
+});
+```
+Here is the GraphQL type that will be generated:
+```graphql
+type Book {
+  id: ID!
+  createdAt: Date!
+  updatedAt: Date!
+  authorId: ID!
+  title: String!
+  genre: Genre
+  author: Author
+  ratings(offset: Int, limit: Int, order: [RatingOrderBy!], filters: RatingFilters): RatingOffsetConnection!
+  fullTitle: String!
+}
 ```
