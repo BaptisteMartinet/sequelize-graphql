@@ -46,7 +46,7 @@ const { url } = await startStandaloneServer(server, {
 });
 ```
 
-## Example
+## Usage
 One can easily define a model like so:
 ```ts
 import type { ForeignKey } from 'sequelize';
@@ -120,5 +120,70 @@ type Book {
 }
 ```
 
-An example project running sequelize-graphql:  
+The lib comes with a set of utilities to generated queries and mutations for your models.  
+Query:
+```ts
+export default new GraphQLObjectType({
+  name: 'Query',
+  fields: {
+    ...exposeModel(Book, {
+      findById: 'book',
+      findByIds: false,
+      pagination: 'books',
+    }),
+  }
+});
+```
+```graphql
+type Query {
+  book(id: ID!): Book!
+  bookByIds(ids: [ID!]!): [Book!]!
+  books(offset: Int, limit: Int, order: [BookOrderBy!], filters: BookFilters): BookOffsetConnection!
+}
+```
+Mutation:
+```ts
+import { GraphQLID, GraphQLNonNull, GraphQLString } from 'graphql';
+import { genModelMutations } from '@sequelize-graphql/core';
+import { Book, Author, GenreEnum } from '@models/index';
+
+export default genModelMutations(Book, {
+  create: {
+    args: {
+      authorId: { type: new GraphQLNonNull(GraphQLID) },
+      title: { type: new GraphQLNonNull(GraphQLString) },
+      genre: { type: new GraphQLNonNull(GenreEnum.gqlType) },
+    },
+    async resolve(_, args, ctx) {
+      const { authorId, title, genre } = args;
+      await Author.ensureExistence(authorId, { ctx });
+      return Book.model.create({ authorId, title, genre });
+    },
+  },
+
+  update: {
+    args: {
+      title: { type: GraphQLString },
+      genre: { type: GenreEnum.gqlType },
+    },
+    async resolve(book, args, ctx) {
+      const { title, genre } = args;
+      return book.update({ title, genre });
+    },
+  },
+
+  delete: true,
+});
+```
+
+```graphql
+type BookMutation {
+  create(input: BookCreateInput!): Book!
+  update(id: ID!, input: BookUpdateInput!): Book!
+  delete(id: ID!): Boolean!
+}
+```
+
+## Example
+A simple project running sequelize-graphql:  
 https://github.com/BaptisteMartinet/sequelize-graphql-example
