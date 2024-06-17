@@ -119,3 +119,6 @@ type Book {
   fullTitle: String!
 }
 ```
+
+An example project running sequelize-graphql:  
+https://github.com/BaptisteMartinet/sequelize-graphql-example
