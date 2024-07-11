@@ -119,7 +119,7 @@ type Book {
 }
 ```
 
-The lib comes with a set of utilities to generated queries and mutations for your models.  
+The lib comes with a set of utilities to generate queries and mutations for your models.  
 Query:
 ```ts
 export default new GraphQLObjectType({
@@ -136,7 +136,6 @@ export default new GraphQLObjectType({
 ```graphql
 type Query {
   book(id: ID!): Book!
-  bookByIds(ids: [ID!]!): [Book!]!
   books(offset: Int, limit: Int, order: [BookOrderBy!], filters: BookFilters): BookOffsetConnection!
 }
 ```
