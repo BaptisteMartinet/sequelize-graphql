@@ -1,4 +1,4 @@
-import type { Model as SequelizeModel, Identifier, IncludeOptions } from 'sequelize';
+import type { Model as SequelizeModel, Identifier, IncludeOptions, CountOptions, Attributes } from 'sequelize';
 import type { Context } from '@schema/index.js';
 import type { ModelDefinition, AssociationDefinition, AssociationSpecs } from './types.js';
 
@@ -136,5 +136,10 @@ export default class Model<M extends SequelizeModel> {
   public ensureExistenceOptional(identifier: Identifier | null, opts: { ctx?: Context } = {}) {
     if (identifier === null) return null;
     return this.ensureExistence(identifier, opts);
+  }
+
+  public async exists(opts: Omit<CountOptions<Attributes<M>>, 'group'>) {
+    const count = await this.model.count(opts);
+    return count > 0;
   }
 }
