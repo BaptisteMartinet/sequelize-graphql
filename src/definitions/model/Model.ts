@@ -1,10 +1,4 @@
-import type {
-  Model as SequelizeModel,
-  Identifier,
-  IncludeOptions,
-  CountOptions,
-  Attributes,
-} from 'sequelize';
+import type { Model as SequelizeModel, Identifier, IncludeOptions, CountOptions, Attributes } from 'sequelize';
 import type { Context } from '@schema/index.js';
 import type { ModelDefinition, AssociationDefinition, AssociationSpecs } from './types.js';
 
@@ -46,21 +40,14 @@ export default class Model<M extends SequelizeModel> {
           as: associationName,
           foreignKey,
           onDelete,
-          constraints: false,
         });
       case 'hasOne':
-        return this._model.hasOne(targetModel.model, {
-          as: associationName,
-          foreignKey,
-          onDelete,
-          constraints: false,
-        });
+        return this._model.hasOne(targetModel.model, { as: associationName, foreignKey, onDelete });
       case 'hasMany':
         return this._model.hasMany(targetModel.model, {
           as: associationName,
           foreignKey,
           onDelete,
-          constraints: false,
         });
       default:
         throw new Error(`Invalid association type: ${type}`);
@@ -137,7 +124,9 @@ export default class Model<M extends SequelizeModel> {
   public async ensureExistence(identifier: Identifier, opts: { ctx?: Context } = {}) {
     const instance = await this.findByPkAllAttrs(identifier, opts);
     if (instance === null)
-      throw new Error(`EnsureExistence check failed for model ${formatModelId(this, identifier)}`);
+      throw new Error(
+        `EnsureExistence check failed for model ${formatModelId(this, identifier)}`,
+      );
     return instance;
   }
 
