@@ -19,7 +19,7 @@ export type InferModelAttributes<M extends Model> = Model<InferAttributes<M>, In
 export type IdType = string;
 
 /** The default sequelize-graphql Model attributes */
-export interface DefaultAttributes {
+export interface DefaultAttributes extends InferModelAttributes<DefaultAttributes> {
   id: CreationOptional<IdType>;
   createdAt: CreationOptional<number>;
   updatedAt: CreationOptional<number>;
@@ -35,4 +35,4 @@ export interface DefaultAttributes {
  * }
  * ```
  */
-export type InferModelAttributesWithDefaults<M extends Model> = InferModelAttributes<M & DefaultAttributes>;
+export type InferModelAttributesWithDefaults<M extends Model> = InferModelAttributes<M> & DefaultAttributes;
