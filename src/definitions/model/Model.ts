@@ -1,4 +1,10 @@
-import type { Model as SequelizeModel, Identifier, IncludeOptions, CountOptions, Attributes } from 'sequelize';
+import type {
+  Model as SequelizeModel,
+  Identifier,
+  IncludeOptions,
+  CountOptions,
+  Attributes,
+} from 'sequelize';
 import type { Context } from '@schema/index.js';
 import type { ModelDefinition, AssociationDefinition, AssociationSpecs } from './types.js';
 
@@ -124,9 +130,7 @@ export default class Model<M extends SequelizeModel> {
   public async ensureExistence(identifier: Identifier, opts: { ctx?: Context } = {}) {
     const instance = await this.findByPkAllAttrs(identifier, opts);
     if (instance === null)
-      throw new Error(
-        `EnsureExistence check failed for model ${formatModelId(this, identifier)}`,
-      );
+      throw new Error(`EnsureExistence check failed for model ${formatModelId(this, identifier)}`);
     return instance;
   }
 
