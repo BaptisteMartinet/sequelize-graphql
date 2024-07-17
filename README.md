@@ -40,8 +40,8 @@ import { makeContext } from '@sequelize-graphql/core';
 // Apollo Server example
 const { url } = await startStandaloneServer(server, {
   context: async ({ req, res }) => ({
-    ...makeContext(), // A simple object containing everyting sequelize-graphql needs to work properly.
-    authToken: req.headers.authorization, // Other stuff you want to place in the context like an auth token.
+    ...makeContext(), // An object containing everyting sequelize-graphql needs to work properly.
+    authToken: req.headers.authorization, // Stuff you want to place in the context like an auth token.
   }),
 });
 ```
@@ -66,15 +66,15 @@ export enum Genre {
 export const GenreEnum = ENUM({ name: 'Genre', values: Genre });
 
 export interface BookModel extends InferModelAttributesWithDefaults<BookModel> {
-  authorId: ForeignKey<IdType>;
   title: string;
   genre: Genre;
+
+  authorId: ForeignKey<IdType>; // Auto-added by the belongsTo association
 }
 
 const Book: Model<BookModel> = new Model({
   name: 'Book',
   columns: {
-    authorId: { type: ID, allowNull: false, exposed: false },
     title: { type: STRING, allowNull: false, exposed: true },
     genre: { type: GenreEnum, defaultValue: Genre.Action, exposed: true },
   },
