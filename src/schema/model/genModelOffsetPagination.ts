@@ -28,8 +28,8 @@ export interface OffsetPaginationGraphQLArgs {
   [key: string]: unknown; // Custom args
 }
 export type OffsetPaginationGraphQLFieldConfig = GraphQLFieldConfig<
-  unknown,
-  unknown,
+  any,
+  any,
   OffsetPaginationGraphQLArgs
 >;
 
