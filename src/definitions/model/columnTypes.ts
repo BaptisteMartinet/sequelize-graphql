@@ -12,7 +12,7 @@ import {
 import { DataTypes } from 'sequelize';
 import { mapRecord } from '@utils/object';
 import { getEnumCleanObj } from '@utils/enum';
-import { GraphlQLDate } from '@graphql-utils/scalars';
+import { GraphQLDate } from '@graphql-utils/scalars';
 import {
   IDFilter,
   IntFilter,
@@ -126,7 +126,7 @@ export function ENUM(args: {
 // Custom types
 
 export const DATE = {
-  gqlType: GraphlQLDate,
+  gqlType: GraphQLDate,
   sequelizeType: DataTypes.DATE,
   filterGqlType: IntFilter,
 } as const satisfies ColumnType;

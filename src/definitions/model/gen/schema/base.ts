@@ -4,7 +4,7 @@ import type { Model } from '@definitions/index';
 import type { ModelDefinition, ColumnDefinition } from '@definitions/index';
 
 import { GraphQLNonNull, GraphQLObjectType } from 'graphql';
-import { GraphlQLDate } from '@graphql-utils/index';
+import { GraphQLDate } from '@graphql-utils/index';
 import { mapRecord, filterRecord } from '@utils/object';
 import { unthunk } from '@utils/thunk';
 import { DefaultIDFieldDefinition } from '@definitions/model/constants';
@@ -41,13 +41,13 @@ export function genModelBaseFields(
     id: { type: new GraphQLNonNull(idFieldType) },
     ...(timestamps
       ? {
-          createdAt: { type: new GraphQLNonNull(GraphlQLDate) },
-          updatedAt: { type: new GraphQLNonNull(GraphlQLDate) },
+          createdAt: { type: new GraphQLNonNull(GraphQLDate) },
+          updatedAt: { type: new GraphQLNonNull(GraphQLDate) },
         }
       : null),
     ...(paranoid === true
       ? {
-          deletedAt: { type: new GraphQLNonNull(GraphlQLDate) },
+          deletedAt: { type: new GraphQLNonNull(GraphQLDate) },
         }
       : null),
   };
