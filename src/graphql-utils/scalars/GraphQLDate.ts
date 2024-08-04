@@ -16,6 +16,7 @@ const GraphQLDate = new GraphQLScalarType({
   // Convert hard-coded AST
   parseLiteral(ast) {
     if (ast.kind === Kind.INT) return new Date(parseInt(ast.value, 10));
+    if (ast.kind === Kind.STRING) return new Date(ast.value);
     return null;
   },
 });
