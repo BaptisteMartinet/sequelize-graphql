@@ -10,7 +10,7 @@ const GraphQLDate = new GraphQLScalarType({
   },
   // Convert incoming
   parseValue(value) {
-    if (typeof value === 'number') return new Date(value);
+    if (typeof value === 'number' || typeof value === 'string') return new Date(value);
     throw new Error('GraphQL Date Scalar parser expected a `number`');
   },
   // Convert hard-coded AST
