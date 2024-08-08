@@ -126,3 +126,9 @@ export const DATE = {
   sequelizeType: DataTypes.DATE,
   filterGqlType: IntFilter,
 } as const satisfies ColumnType;
+
+export const DATEONLY = {
+  gqlType: GraphQLDate,
+  sequelizeType: DataTypes.DATEONLY,
+  filterGqlType: IntFilter,
+} as const satisfies ColumnType;
