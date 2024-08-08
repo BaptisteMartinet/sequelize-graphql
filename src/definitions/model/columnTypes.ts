@@ -102,11 +102,7 @@ export const BOOLEAN = {
  * });
  * ```
  */
-export function ENUM(args: {
-  name: string;
-  values: EnumType;
-  description?: string;
-}): ColumnType {
+export function ENUM(args: { name: string; values: EnumType; description?: string }): ColumnType {
   const { name, values, description } = args;
   const entries = getEnumCleanObj(values);
   const gqlType = new GraphQLEnumType({
