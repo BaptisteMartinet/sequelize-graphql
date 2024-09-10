@@ -33,6 +33,7 @@ export interface ColumnDefinition {
   exposed: boolean;
   defaultValue?: unknown;
   autoIncrement?: boolean;
+  unique?: boolean;
   /**
    * Makes the field orderable.
    * @default true

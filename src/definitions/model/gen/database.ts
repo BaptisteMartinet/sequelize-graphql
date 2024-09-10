@@ -7,12 +7,13 @@ import { DefaultIDFieldDefinition } from '@definitions/model/constants';
 
 export function makeModelAttributes(fields: Record<string, ColumnDefinition>): ModelAttributes {
   const attributes = mapRecord(fields, (field) => {
-    const { type, allowNull, defaultValue, autoIncrement } = field;
+    const { type, allowNull, defaultValue, autoIncrement, unique } = field;
     return {
       type: type.sequelizeType,
       allowNull,
       defaultValue,
       autoIncrement,
+      unique,
     };
   })
   return attributes;
