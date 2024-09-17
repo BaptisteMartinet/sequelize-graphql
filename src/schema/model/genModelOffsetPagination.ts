@@ -46,6 +46,7 @@ export default function genModelOffsetPagination<M extends SequelizeModel>(
 ): OffsetPaginationGraphQLFieldConfig {
   const { outputType, args, where: whereGetter, description } = opts;
   const nodeType = outputType ?? model.type;
+
   return {
     type: new GraphQLNonNull(makeOffsetConnection(nodeType, { description })),
     args: {
