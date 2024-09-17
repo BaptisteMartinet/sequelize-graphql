@@ -50,7 +50,7 @@ export interface OffsetPaginationOpts<M extends SequelizeModel> {
     ctx: any,
   ) => OptionalPromise<{
     attributes?: FindAttributeOptions;
-    include?: Includeable[];
+    include?: Includeable | Includeable[];
     where?: WhereOptions<Attributes<M>>;
     order?: Order;
   }>;
