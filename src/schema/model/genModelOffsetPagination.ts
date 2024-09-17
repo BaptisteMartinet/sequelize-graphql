@@ -1,5 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { Model as SequelizeModel, WhereOptions, Attributes } from 'sequelize';
+import type {
+  Model as SequelizeModel,
+  WhereOptions,
+  Attributes,
+  Includeable,
+  Order,
+  FindAttributeOptions,
+} from 'sequelize';
 import type {
   GraphQLFieldConfig,
   GraphQLFieldConfigArgumentMap,
@@ -37,7 +44,16 @@ export type OffsetPaginationGraphQLFieldConfig = GraphQLFieldConfig<
 export interface OffsetPaginationOpts<M extends SequelizeModel> {
   outputType?: GraphQLNamedOutputType;
   args?: GraphQLFieldConfigArgumentMap;
-  where?: (source: any, args: any, ctx: any) => OptionalPromise<WhereOptions<Attributes<M>>>;
+  config?: (
+    source: any,
+    args: any,
+    ctx: any,
+  ) => OptionalPromise<{
+    attributes?: FindAttributeOptions;
+    include?: Includeable[];
+    where?: WhereOptions<Attributes<M>>;
+    order?: Order;
+  }>;
   description?: string;
 }
 
@@ -45,7 +61,7 @@ export default function genModelOffsetPagination<M extends SequelizeModel>(
   model: Model<M>,
   opts: OffsetPaginationOpts<M> = {},
 ): OffsetPaginationGraphQLFieldConfig {
-  const { outputType, args, where: whereGetter, description } = opts;
+  const { outputType, args, config: configGetter, description } = opts;
   const nodeType = outputType ?? model.type;
 
   return {
@@ -58,19 +74,27 @@ export default function genModelOffsetPagination<M extends SequelizeModel>(
       filters: { type: genModelFilters(model) },
     },
     async resolve(source, args, ctx, info) {
-      const { offset, limit, order, filters, ...customArgs } = args;
+      const { offset, limit, order: orderArg, filters, ...customArgs } = args;
+
+      const config = configGetter ? await configGetter(source, customArgs, ctx) : null;
 
       const whereConditions: Array<WhereOptions> = [];
-      if (whereGetter) whereConditions.push(await whereGetter(source, customArgs, ctx));
+      if (config?.where) whereConditions.push(config.where);
       if (filters) whereConditions.push(resolveFilters(filters));
       const where = { [Op.and]: whereConditions };
+
+      let order: Order = [];
+      if (orderArg) order = order.concat(orderArg.map(convertOrderByToSequelizeOrderItem));
+      if (config?.order) order = order.concat(config.order);
 
       const selectedFields = getResolveInfoSelectedFieldsRoot(info);
       const nodes = selectedFields.has('nodes')
         ? model.model.findAll({
+            attributes: config?.attributes,
+            include: config?.include,
             offset: offset ?? undefined,
             limit: limit ?? undefined,
-            order: order?.map(convertOrderByToSequelizeOrderItem),
+            order,
             where,
           })
         : null;
