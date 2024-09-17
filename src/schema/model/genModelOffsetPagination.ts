@@ -5,6 +5,7 @@ import type {
   GraphQLFieldConfigArgumentMap,
   GraphQLNamedOutputType,
 } from 'graphql';
+import type { OptionalPromise } from '@utils/promise';
 import type { Model } from '@definitions/index';
 import type { GenericOrderBy } from '@schema/index';
 
@@ -36,7 +37,7 @@ export type OffsetPaginationGraphQLFieldConfig = GraphQLFieldConfig<
 export interface OffsetPaginationOpts<M extends SequelizeModel> {
   outputType?: GraphQLNamedOutputType;
   args?: GraphQLFieldConfigArgumentMap;
-  where?: (source: any, args: any, ctx: any) => WhereOptions<Attributes<M>>;
+  where?: (source: any, args: any, ctx: any) => OptionalPromise<WhereOptions<Attributes<M>>>;
   description?: string;
 }
 
@@ -60,7 +61,7 @@ export default function genModelOffsetPagination<M extends SequelizeModel>(
       const { offset, limit, order, filters, ...customArgs } = args;
 
       const whereConditions: Array<WhereOptions> = [];
-      if (whereGetter) whereConditions.push(whereGetter(source, customArgs, ctx));
+      if (whereGetter) whereConditions.push(await whereGetter(source, customArgs, ctx));
       if (filters) whereConditions.push(resolveFilters(filters));
       const where = { [Op.and]: whereConditions };
 
