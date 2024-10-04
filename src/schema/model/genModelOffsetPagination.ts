@@ -98,7 +98,9 @@ export default function genModelOffsetPagination<M extends SequelizeModel>(
             where,
           })
         : null;
-      const count = selectedFields.has('count') ? model.model.count({ where }) : null;
+      const count = selectedFields.has('count')
+        ? model.model.count({ include: config?.include, where })
+        : null;
       return promiseAllRecord({ nodes, count });
     },
   };
