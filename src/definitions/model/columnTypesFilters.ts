@@ -12,7 +12,7 @@ import {
   GraphQLInt,
   GraphQLString,
 } from 'graphql';
-import { GraphQLNonNullList } from '@graphql-utils/index';
+import { GraphQLDate, GraphQLNonNullList } from '@graphql-utils/index';
 import { mapRecord } from '@utils/object';
 
 interface FilterDefinition {
@@ -111,6 +111,7 @@ export function makeFiltersType(
 
 export const IntFilter = makeFiltersType(GraphQLInt, NumericFilterDefinitions);
 export const FloatFilter = makeFiltersType(GraphQLFloat, NumericFilterDefinitions);
+export const DateFilter = makeFiltersType(GraphQLDate, NumericFilterDefinitions);
 export const StringFilter = makeFiltersType(GraphQLString, StringFilterDefinitions);
 export const IDFilter = makeFiltersType(GraphQLID);
 export const BooleanFilter = makeFiltersType(GraphQLBoolean);

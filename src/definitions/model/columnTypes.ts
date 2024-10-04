@@ -16,6 +16,7 @@ import { GraphQLDate } from '@graphql-utils/scalars';
 import {
   IDFilter,
   IntFilter,
+  DateFilter,
   FloatFilter,
   StringFilter,
   BooleanFilter,
@@ -124,11 +125,11 @@ export function ENUM(args: { name: string; values: EnumType; description?: strin
 export const DATE = {
   gqlType: GraphQLDate,
   sequelizeType: DataTypes.DATE,
-  filterGqlType: IntFilter,
+  filterGqlType: DateFilter,
 } as const satisfies ColumnType;
 
 export const DATEONLY = {
   gqlType: GraphQLDate,
   sequelizeType: DataTypes.DATEONLY,
-  filterGqlType: IntFilter,
+  filterGqlType: DateFilter,
 } as const satisfies ColumnType;
