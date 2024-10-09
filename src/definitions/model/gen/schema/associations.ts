@@ -57,9 +57,11 @@ function genHasMany(associationSpecs: AssociationSpecs): GraphQLFieldConfig<any,
   const { model: targetModel, description } = associationDef;
   return genModelOffsetPagination(targetModel, {
     description,
-    where(parent) {
+    config(parent) {
       const where = genAssociationWhere({ parent, sequelizeAssociation });
-      return where;
+      return {
+        where,
+      };
     },
   });
 }
