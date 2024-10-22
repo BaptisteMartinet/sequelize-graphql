@@ -8,7 +8,8 @@ import { cacheGraphQLType } from '@schema/index';
 
 export default function genModelFilters<M extends SequelizeModel>(model: Model<M>) {
   const { name, definition } = model;
-  const filterableColumns = filterRecord(definition.columns, (column) => {
+  const { columns } = definition;
+  const filterableColumns = filterRecord(columns, (column) => {
     return column.type.filterGqlType !== undefined && (column.filterable ?? column.exposed);
   });
   return cacheGraphQLType(
