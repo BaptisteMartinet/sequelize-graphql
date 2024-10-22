@@ -9,7 +9,7 @@ import { cacheGraphQLType } from '@schema/index';
 
 export default function genModelFilters<M extends SequelizeModel>(model: Model<M>) {
   const { name, definition } = model;
-  const { columns, timestamps } = definition;
+  const { columns, timestamps = true } = definition;
   const filterableColumns = filterRecord(columns, (column) => {
     return column.type.filterGqlType !== undefined && (column.filterable ?? column.exposed);
   });
@@ -22,7 +22,7 @@ export default function genModelFilters<M extends SequelizeModel>(model: Model<M
           assert(column); // Used for type safety. Should never trigger.
           return { type: column.type.filterGqlType };
         }),
-        ...(timestamps === undefined || timestamps === true
+        ...(timestamps
           ? {
               createdAt: { type: DateFilter },
               updatedAt: { type: DateFilter },
