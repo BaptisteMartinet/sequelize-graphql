@@ -48,6 +48,12 @@ export interface ColumnDefinition {
   filterable?: boolean;
   /**  Adds a description on the GraphQL field */
   description?: string;
+  /**
+   * Will be used by validateModelFields util.  
+   * Will also be ran by sequelize on model save, update, etc.  
+   * Will not be ran depending on the column allowNull value.
+   */
+  validate?: (value: any, fields: Record<string, any>) => boolean,
 }
 
 export type IDColumnDefinition = Pick<ColumnDefinition, 'type' | 'autoIncrement' | 'defaultValue'>;

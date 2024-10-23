@@ -6,14 +6,23 @@ import { camelize } from '@utils/string';
 import { DefaultIDFieldDefinition } from '@definitions/model/constants';
 
 export function makeModelAttributes(fields: Record<string, ColumnDefinition>): ModelAttributes {
-  const attributes = mapRecord(fields, (field) => {
-    const { type, allowNull, defaultValue, autoIncrement, unique } = field;
+  const attributes = mapRecord(fields, (field, columnName) => {
+    const { type, allowNull, defaultValue, autoIncrement, unique, validate } = field;
     return {
       type: type.sequelizeType,
       allowNull,
       defaultValue,
       autoIncrement,
       unique,
+      validate: {
+        validation(value: any) {
+          if (value === null && allowNull) // Weird case where sequelize run validation with null value.
+            return;
+          if (validate && validate(value, this))
+            return;
+          throw new Error(`${columnName} got invalid value: ${value}`);
+        },
+      },
     };
   })
   return attributes;

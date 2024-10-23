@@ -9,3 +9,4 @@ export {
 } from './genModelOrderBy';
 export { default as genModelFilters } from './genModelFilters';
 export { default as genModelMutations } from './genModelMutations';
+export { default as validateModelFields } from './validateModelFields';
