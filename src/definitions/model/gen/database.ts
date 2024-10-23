@@ -18,7 +18,7 @@ export function makeModelAttributes(fields: Record<string, ColumnDefinition>): M
         validation(value: any) {
           if (value === null && allowNull) // Weird case where sequelize run validation with null value.
             return;
-          if (validate && validate(value, this))
+          if (!validate || validate(value, this))
             return;
           throw new Error(`${columnName} got invalid value: ${value}`);
         },
