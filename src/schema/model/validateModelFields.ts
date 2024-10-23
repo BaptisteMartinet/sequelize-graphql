@@ -1,6 +1,10 @@
 import type { Model as SequelizeModel } from 'sequelize';
 import type { Model } from '@definitions/index';
 
+/**
+ * Useful to check if some fields respect the Model columns validations.
+ * Most used in mutations before launching DB CRUD operations.
+ */
 export default function validateModelFields<M extends SequelizeModel>(
   model: Model<M>,
   fields: Record<string, any>,
