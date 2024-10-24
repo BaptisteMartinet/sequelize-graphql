@@ -44,15 +44,19 @@ export default class Model<M extends SequelizeModel> {
       case 'belongsTo':
         return this._model.belongsTo(targetModel.model, {
           as: associationName,
-          foreignKey,
+          foreignKey: { name: foreignKey, allowNull: !deleteCascade },
           onDelete,
         });
       case 'hasOne':
-        return this._model.hasOne(targetModel.model, { as: associationName, foreignKey, onDelete });
+        return this._model.hasOne(targetModel.model, {
+          as: associationName,
+          foreignKey: { name: foreignKey, allowNull: !deleteCascade },
+          onDelete,
+        });
       case 'hasMany':
         return this._model.hasMany(targetModel.model, {
           as: associationName,
-          foreignKey,
+          foreignKey: { name: foreignKey, allowNull: !deleteCascade },
           onDelete,
         });
       default:
