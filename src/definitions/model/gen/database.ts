@@ -16,7 +16,7 @@ export function makeModelAttributes(fields: Record<string, ColumnDefinition>): M
       unique,
       validate: {
         validation(value: any) {
-          if (value === null && allowNull) // Weird case where sequelize run validation with null value.
+          if ((value === null || value === undefined) && allowNull) // Weird case where sequelize run validation with null value.
             return;
           if (!validate || validate(value, this))
             return;
